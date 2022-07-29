@@ -1,6 +1,7 @@
 package com.evermore.sha256aestest
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -16,17 +17,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private val TAG = MainActivity::class.java.simpleName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.samekey.isEnabled = AESUtil.getSavedSecretKeyAsString(this) != "no_key"
+
         binding.encrypt.setOnClickListener {
             var rawdata = binding.rawData.text.toString()
-            var ivString = binding.ivparam.text.toString()
+            var ivString = binding.ivparam.text.toString().run {
+                this.ifEmpty {
+                    null
+                }
+            }
+            Log.d(TAG, "ivString > $ivString")
             if (rawdata.isNotEmpty()) {
-                val encValue = AESUtil.encrypt(this, rawdata, ivString)
+                val encValue = AESUtil.encrypt(this, rawdata, binding.samekey.isChecked, ivString)
                 binding.encValue.text = encValue
                 binding.key.text = AESUtil.getSavedSecretKeyAsString(this)
                 binding.ivspec.text = AESUtil.getSavedInitializationVectorAsString(this)

@@ -19,11 +19,17 @@ class AESUtil {
     companion object {
         private val TAG = AESUtil::class.simpleName
         private const val encryptionTransformation = "AES/CBC/PKCS7Padding"
+        private const val encryptionTransformationNoIV = "AES/EBC/PKCS7Padding"
         fun decrypt(context: Context, data: String): String? {
             try {
                 val cipher = Cipher.getInstance(encryptionTransformation)
-                val ivSpec = IvParameterSpec(getSavedInitializationVector(context))
-                cipher.init(Cipher.DECRYPT_MODE, getSavedSecretKey(context), ivSpec)
+                val ivStr = getSavedInitializationVectorAsString(context)
+                if (ivStr != "no_iv") {
+                    val ivSpec = IvParameterSpec(getSavedInitializationVector(context))
+                    cipher.init(Cipher.DECRYPT_MODE, getSavedSecretKey(context), ivSpec)
+                } else {
+                    cipher.init(Cipher.DECRYPT_MODE, getSavedSecretKey(context))
+                }
                 val byteArray = Base64.decode(data, Base64.NO_WRAP)
                 var cipherText = cipher.doFinal(byteArray)
                 val decValue = String(cipherText)
@@ -35,15 +41,20 @@ class AESUtil {
             return null
         }
 
-        fun encrypt(context: Context, data: String, iv: String): String? {
+        fun encrypt(context: Context, data: String, useSavedKey: Boolean = false, iv: String?): String? {
             try {
                 val keygen = KeyGenerator.getInstance("AES")
                 keygen.init(256)
-                val key = keygen.generateKey()
-                saveSecretKey(context, key)
-                val ivParameterSpec = IvParameterSpec(iv.toByteArray(Charset.forName("utf-8")))
+                val enckey = if (useSavedKey) {
+                    getSavedSecretKey(context)
+                } else {
+                    val key = keygen.generateKey()
+                    saveSecretKey(context, key)
+                    key
+                }
+                val ivParameterSpec = iv?.let { IvParameterSpec(iv.toByteArray(Charset.forName("utf-8"))) }
                 val cipher = Cipher.getInstance(encryptionTransformation)
-                cipher.init(Cipher.ENCRYPT_MODE, key, ivParameterSpec)
+                ivParameterSpec?.let { cipher.init(Cipher.ENCRYPT_MODE, enckey, ivParameterSpec) } ?: cipher.init(Cipher.ENCRYPT_MODE, enckey)
                 var cipherText = cipher.doFinal(data.toByteArray(Charset.forName("utf-8")))
                 saveInitializationVector(context, cipher.iv)
                 val encValue = Base64.encodeToString(cipherText, Base64.NO_WRAP)
@@ -75,11 +86,14 @@ class AESUtil {
             return secretKey
         }
 
-        private fun saveInitializationVector(context: Context, initializationVector: ByteArray) {
-            val baos = ByteArrayOutputStream()
-            val oos = ObjectOutputStream(baos)
-            oos.writeObject(initializationVector)
-            val strToSave = String(android.util.Base64.encode(baos.toByteArray(), android.util.Base64.DEFAULT))
+        private fun saveInitializationVector(context: Context, initializationVector: ByteArray?) {
+            Log.d(TAG, "initializationVector > ${initializationVector == null}")
+            val strToSave = initializationVector?.let {
+                val baos = ByteArrayOutputStream()
+                val oos = ObjectOutputStream(baos)
+                oos.writeObject(initializationVector)
+                String(android.util.Base64.encode(baos.toByteArray(), android.util.Base64.DEFAULT))
+            } ?: "no_iv"
             val sharedPref = context.getSharedPreferences("aes_test", MODE_PRIVATE)
             val editor = sharedPref.edit()
             editor.putString("initialization_vector", strToSave)

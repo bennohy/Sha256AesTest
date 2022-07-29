@@ -31,6 +31,12 @@
                 android:maxLength="16"
                 android:text="android123456789" />
 
+            <CheckBox
+                android:id="@+id/samekey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use Same Key" />
+
             <Button
                 android:id="@+id/encrypt"
                 android:layout_width="match_parent"
