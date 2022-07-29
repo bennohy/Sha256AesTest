@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
+
+            <EditText
+                android:id="@+id/rawData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/ivparam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="16"
+                android:text="android123456789" />
+
+            <Button
+                android:id="@+id/encrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Encrypt" />
+
+            <Button
+                android:id="@+id/decrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Decrypt" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblencValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#0066CC"
+            android:padding="8dp"
+            android:text="Encrypt Result"
+            android:textColor="#EEFFFF"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/encValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0066CC"
+            android:padding="8dp"
+            android:text="encValue"
+            android:textColor="#EEFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/lblencValue"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/lbldecValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#00CC66"
+            android:padding="8dp"
+            android:text="DecryptResult"
+            android:textColor="#EEFFFF"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/encValue"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/decValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00CC66"
+            android:padding="8dp"
+            android:text="decValue"
+            android:textColor="#EEFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/lbldecValue"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/lblkey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#00AAAA"
+            android:padding="8dp"
+            android:text="Key"
+            android:textColor="#EEFFFF"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/decValue"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00AAAA"
+            android:padding="8dp"
+            android:text="key"
+            android:textColor="#EEFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/lblkey"
+            tools:layout_editor_absoluteX="16dp" />
+
+
+        <TextView
+            android:id="@+id/lblivspec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#EEFFFF"
+            android:padding="8dp"
+            android:text="IV"
+            android:textColor="#00AAAA"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/key"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/ivspec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EEFFFF"
+            android:padding="8dp"
+            android:text="ivspec"
+            android:textColor="#00AAAA"
+            app:layout_constraintTop_toBottomOf="@+id/lblivspec"
+            tools:layout_editor_absoluteX="16dp" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="#FF0000"
+            android:padding="8dp"
+            android:text="Clear"
+            android:textColor="#EEFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/ivspec"
+            tools:layout_editor_absoluteX="16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
