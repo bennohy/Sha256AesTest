@@ -2,14 +2,8 @@ package com.evermore.sha256aestest
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.evermore.sha256aestest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -50,9 +44,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.sha256.setOnClickListener {
+            var rawdata = binding.rawData.text.toString()
+            if (rawdata.isNotEmpty()) {
+                val hashValue = AESUtil.toSha256(rawdata)
+                binding.hashValue.text = hashValue
+            }
+        }
+
         binding.clear.setOnClickListener {
             binding.rawData.setText("")
             binding.encValue.text = ""
+            binding.hashValue.text = ""
             binding.decValue.text = ""
             binding.ivspec.text = ""
             binding.key.text = ""

@@ -48,7 +48,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Decrypt" />
+
+            <Button
+                android:id="@+id/sha256"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sha256" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblhashValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#0066CC"
+            android:padding="8dp"
+            android:text="Sha256 Result"
+            android:textColor="#EEFFFF"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/hashValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0066CC"
+            android:padding="8dp"
+            android:text="hash"
+            android:textColor="#EEFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/lblhashValue"
+            tools:layout_editor_absoluteX="16dp" />
 
         <TextView
             android:id="@+id/lblencValue"
@@ -60,7 +90,7 @@
             android:text="Encrypt Result"
             android:textColor="#EEFFFF"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/hashValue"
             tools:layout_editor_absoluteX="16dp" />
 
         <TextView

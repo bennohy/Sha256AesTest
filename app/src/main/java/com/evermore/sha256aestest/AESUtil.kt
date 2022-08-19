@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.nio.charset.Charset
+import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -125,6 +126,11 @@ class AESUtil {
                 stringBuilder.append(String.format("%02X", b))
             }
             return stringBuilder.toString()
+        }
+
+        fun toSha256(data: String): String {
+            val digest = MessageDigest.getInstance("SHA-256")
+            return toHex(digest.digest(data.toByteArray(Charset.forName("utf-8"))))
         }
     }
 }
