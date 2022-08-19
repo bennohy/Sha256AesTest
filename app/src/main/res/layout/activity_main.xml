@@ -21,11 +21,13 @@
 
             <EditText
                 android:id="@+id/rawData"
+                android:hint="@string/raw_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/ivparam"
+                android:hint="@string/iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="16"
